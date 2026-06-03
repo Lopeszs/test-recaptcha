@@ -12,10 +12,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
 
-    // 🔥 REGISTRA O MÓDULO DO V3 (FALTAVA ISSO)
+    // REGISTRA O MÓDULO DO V3 
     importProvidersFrom(RecaptchaV3Module),
 
-    // 🔐 SUA KEY
+    // SITE KEY V3
     {
       provide: RECAPTCHA_V3_SITE_KEY,
       useValue: '6LdJZ7ksAAAAAGeoxw17tDJpQn_nshtK0MekpFsf'

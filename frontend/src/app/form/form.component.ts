@@ -29,7 +29,7 @@ export class FormComponent {
   isDropdownOpen = false;
   selectedData: any[] = [];
 
-  // 🔥 RECAPTCHA
+  // RECAPTCHA
   mostrarCaptcha = false;
   captchaTokenV2: string | null = null;
   captchaTokenV3: string | null = null;
@@ -37,10 +37,10 @@ export class FormComponent {
   private http = inject(HttpClient);
   private recaptchaV3Service = inject(ReCaptchaV3Service);
 
-  // 🚀 BOTÃO ENVIAR
+  // BOTÃO ENVIAR
   enviaEmail() {
 
-    // 🔥 PRIMEIRO CLIQUE → executa V3 + mostra V2
+    // PRIMEIRO CLIQUE → executa V3 + mostra V2
     if (!this.mostrarCaptcha) {
 
       this.recaptchaV3Service.execute('submit').subscribe((token: string) => {
@@ -52,13 +52,13 @@ export class FormComponent {
       return;
     }
 
-    // 🔒 BLOQUEIO SE V2 NÃO FOI RESOLVIDO
+    // BLOQUEIO SE V2 NÃO FOI RESOLVIDO
     if (!this.captchaTokenV2) {
       alert('Confirme o captcha!');
       return;
     }
 
-    // 🔥 ENVIO COM OS DOIS TOKENS
+    // ENVIO COM OS DOIS TOKENS
     this.http.post('http://localhost:8000/api/validate-recaptcha', {
       token_v2: this.captchaTokenV2,
       token_v3: this.captchaTokenV3
@@ -72,13 +72,16 @@ export class FormComponent {
     });
   }
 
-  // 🔥 CALLBACK V2
+  // CALLBACK V2
   onCaptchaResolved(token: string | null) {
     console.log('TOKEN V2:', token);
 
     if (!token) return;
 
     this.captchaTokenV2 = token;
+
+    // continua o fluxo
+    this.enviaEmail();
   }
 
   toggleDropdown(event: Event) {
